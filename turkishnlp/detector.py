@@ -58,8 +58,8 @@ class TurkishNLP:
 
         :return: Return the target directory depending on the OS
         """
-        if os.path.exists("turkishnlp"):
-            return "turkishnlp"
+        if os.path.exists("nlpdata"):
+            return os.path.abspath("nlpdata")
         else:
             raise Exception('You need to download the data first')
 
