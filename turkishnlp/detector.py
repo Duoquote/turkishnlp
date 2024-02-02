@@ -35,13 +35,13 @@ class TurkishNLP:
                 self.all_words = word_set
 
         else:
-            raise Exception('You need to download the data first using download() function')
+            raise Exception('You need to download the data first')
 
         if os.path.isfile(dir + "/words_counted.pkl"):
             with open(dir + "/words_counted.pkl", "rb") as f_count:
                 self.counted_words = pickle.load(f_count)
         else:
-            raise Exception('You need to download the data first using download() function')
+            raise Exception('You need to download the data first')
 
         if os.path.isfile(dir + "/words_alt.pkl"):
             with open(dir + "/words_alt.pkl", "rb") as f_count:
@@ -50,22 +50,7 @@ class TurkishNLP:
                     (k, log((i + 1) * log(len(words_alt)))) for i, k in enumerate(words_alt))
                 self.longest_word = max(len(x) for x in words_alt)
         else:
-            raise Exception('You need to download the data first using download() function')
-
-    def download(self):
-        """
-        Downloading data to the spesific directory
-        :return:
-        """
-        dir = self.__get_directory()
-
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-
-        urllib.request.urlretrieve("http://turkish-nlp.com/datanlp/words.pkl", dir + "/words.pkl")
-        urllib.request.urlretrieve("http://turkish-nlp.com/datanlp/words_counted.pkl", dir + "/words_counted.pkl")
-        urllib.request.urlretrieve("http://turkish-nlp.com/datanlp/words_alt.pkl", dir + "/words_alt.pkl")
-        print("Download is successful")
+            raise Exception('You need to download the data first')
 
     @staticmethod
     def __get_directory():
@@ -73,17 +58,10 @@ class TurkishNLP:
 
         :return: Return the target directory depending on the OS
         """
-        if sys.platform == 'win32' and 'APPDATA' in os.environ:
-            homedir = os.environ['APPDATA']
-
-            # Otherwise, install in the user's home directory.
+        if os.path.exists("turkishnlp"):
+            return "turkishnlp"
         else:
-            homedir = os.path.expanduser('~/')
-            if homedir == '~/':
-                raise ValueError("Could not find a default download directory")
-
-            # append "TRnlpdata" to the home directory
-        return os.path.join(homedir, 'TRnlpdata')
+            raise Exception('You need to download the data first')
 
     @staticmethod
     def list_words(text):
