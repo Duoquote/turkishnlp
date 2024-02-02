@@ -22,6 +22,7 @@ class TurkishNLP:
         self.counted_words = None
         self.word_cost = None
         self.longest_word = 0
+        self.create_word_set()
 
     def create_word_set(self):
         """
